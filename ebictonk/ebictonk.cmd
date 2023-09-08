@@ -1,0 +1,1 @@
+java -cp ../lib/* ebictonk.java >nul
