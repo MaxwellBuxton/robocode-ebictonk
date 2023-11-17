@@ -1,10 +1,10 @@
 {
-    "name": "ebictonk",
-    "version": "1.0",
-    "authors": ["Maxwell Buxton"],
-    "description": "The best tank ever",
+    "name": "EbicTonk",
+    "version": "2.004",
+    "authors": ["His Majesty Maxwell Buxton"],
+    "description": "The all time champion returns now with 20% less getting stuck",
     "homepage": "github.com/MaxwellBuxton/robocode-ebictonk",
-    "countryCodes": ["us"],
+    "countryCodes": ["The Moon"],
     "platform": "JVM",
     "programmingLang": "Java"
 }

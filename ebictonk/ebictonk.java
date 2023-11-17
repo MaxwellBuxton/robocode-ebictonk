@@ -21,7 +21,7 @@ public class ebictonk extends Bot{
         tlock = 0;
         rota = 0;
         lastHitWall = -30;
-        System.out.println("restart" + tlock);
+        //System.out.println("restart" + tlock);
         setAdjustGunForBodyTurn(true);
         setAdjustRadarForBodyTurn(true);
         setAdjustRadarForGunTurn(true);
@@ -63,7 +63,7 @@ public class ebictonk extends Bot{
             double dY2 = Math.sin(rota) * 300;
             setTurnLeft(calcBearing(directionTo(e.getX() + dX2,e.getY() + dY2)));
             if(getTurnNumber() - lastHitWall > 20){
-                setForward(8);
+                setForward(100);
             }
             if(distanceTo(e.getX() + dX2,e.getY() + dY2) < 50){
                 rota += Math.toRadians(spiin);
@@ -83,14 +83,49 @@ public class ebictonk extends Bot{
         }
     }
 
-    public void onHitWall(HitWallEvent botHitWallEvent){
-        spiin = spiin * -1;
-        rota += Math.toRadians(spiin*20);
-        if(getTurnNumber() - lastHitWall > 20){
-            setBack(20);
+    public int wallDanger(){
+        double edge = getArenaWidth();
+        double top = getArenaHeight();
+        
+        if(getX() > edge - 150){
+            return 1;
         }
-        lastHitWall = getTurnNumber();
-        //System.out.println("hit wall"+spiin);
+        else if(getX() < 150){
+            return 3;
+        }
+        else if(getY() > top - 150){
+            return 4;
+        }
+        else if(getY() < 150){
+            return 2;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public void awayFromWall(int side){
+        double deltaaaah = 0;
+        if(side == 1){
+            deltaaaah = calcBearing(0);
+        }
+        else if(side == 2){
+            deltaaaah = calcBearing(270);
+        }
+        else if(side == 3){
+            deltaaaah = calcBearing(180);
+        }
+        else if(side == 4){
+            deltaaaah = calcBearing(90);
+        }
+
+        if(deltaaaah > 0){
+            setTurnLeft(-90);
+        }
+        else{
+            setTurnLeft(90);
+        }
+        setForward(100);
     }
 
     public void onScannedBot(ScannedBotEvent e){
@@ -105,7 +140,13 @@ public class ebictonk extends Bot{
         
         setTurnRadarLeft(radber);
         setTurnGunLeft(gunber);
+        int walldetec = wallDanger();
+        if(walldetec == 0){
         circle(e);
+        }
+        else{
+            awayFromWall(walldetec);
+        }
         //if(distanceTo(e.getX(),e.getY()) > 300){
             //setForward(distanceTo(e.getX() + deltaX,e.getY() + deltaY));
         //}
